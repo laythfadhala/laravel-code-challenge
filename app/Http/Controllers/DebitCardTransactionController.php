@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DebitCardTransactionCreateRequest;
-use App\Http\Requests\DebitCardTransactionDestroyRequest;
-use App\Http\Requests\DebitCardTransactionShowIndexRequest;
-use App\Http\Requests\DebitCardTransactionShowRequest;
-use App\Http\Requests\DebitCardTransactionUpdateRequest;
-use App\Http\Resources\DebitCardTransactionResource;
 use App\Models\DebitCard;
-use App\Models\DebitCardTransaction;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use App\Models\DebitCardTransaction;
 use Illuminate\Routing\Controller as BaseController;
+use App\Http\Resources\DebitCardTransactionResource;
+use App\Http\Requests\DebitCardTransactionShowRequest;
+use App\Http\Requests\DebitCardTransactionCreateRequest;
+use App\Http\Requests\DebitCardTransactionShowIndexRequest;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class DebitCardTransactionController extends BaseController
@@ -21,16 +18,14 @@ class DebitCardTransactionController extends BaseController
      * Get debit card transactions list
      *
      * @param DebitCardTransactionShowIndexRequest $request
-     *
+     * @param DebitCard $debitCard
      * @return JsonResponse
      */
-    public function index(DebitCardTransactionShowIndexRequest $request): JsonResponse
+    public function index(DebitCardTransactionShowIndexRequest $request, $debitCard): JsonResponse
     {
-        $debitCard = DebitCard::find($request->input('debit_card_id'));
-
-        $debitCardTransactions = $debitCard
-            ->debitCardTransactions()
-            ->get();
+        // ! changed because the code was for post request not get.
+        $debitCardTransactions = DebitCard::find($debitCard)
+            ->debitCardTransactions;
 
         return response()->json(DebitCardTransactionResource::collection($debitCardTransactions), HttpResponse::HTTP_OK);
     }
@@ -62,7 +57,7 @@ class DebitCardTransactionController extends BaseController
      *
      * @return JsonResponse
      */
-    public function show(DebitCardTransactionShowRequest $request, DebitCardTransaction $debitCardTransaction)
+    public function show(DebitCardTransactionShowRequest $request, DebitCardTransaction $debitCardTransaction): JsonResponse
     {
         return response()->json(new DebitCardTransactionResource($debitCardTransaction), HttpResponse::HTTP_OK);
     }

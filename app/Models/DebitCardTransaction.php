@@ -12,19 +12,22 @@ use Illuminate\Notifications\Notifiable;
 
 class DebitCardTransaction extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     // Currencies available
     public const CURRENCY_IDR = 'IDR';
     public const CURRENCY_SGD = 'SGD';
     public const CURRENCY_THB = 'THB';
     public const CURRENCY_VND = 'VND';
+    public const CURRENCY_EUR = 'EUR';
 
     public const CURRENCIES = [
         self::CURRENCY_IDR,
         self::CURRENCY_SGD,
         self::CURRENCY_THB,
         self::CURRENCY_VND,
+        self::CURRENCY_EUR,
     ];
 
     /**

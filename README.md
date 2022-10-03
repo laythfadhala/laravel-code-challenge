@@ -70,3 +70,10 @@ In order to make the unit tests passed, you need to fulfil:
 - the LoanService class;
 
 **IMPORTANT:** For this challenge you SHOULD NOT update the unit test
+
+### Steps to be considered before running the tests
+1. Update php version in composer.json to yours, and run `composer update`.
+2. create .env from the .env.example file and run `php artisan key:generate`
+3. Run `php artisan passport:keys` to generate the auth keys. 
+4. Optional: Run `php artisan route:list` to verify the existing routes 
+5. Run `php artisan test`.

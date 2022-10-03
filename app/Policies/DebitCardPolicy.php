@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Polocies;
+namespace App\Policies; //! changed because it was a wrong namespace
 
 use App\Models\DebitCard;
 use App\Models\User;

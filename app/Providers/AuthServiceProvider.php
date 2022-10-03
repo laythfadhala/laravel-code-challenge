@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Models\DebitCard;
 use App\Models\DebitCardTransaction;
-use App\Polocies\DebitCardPolicy;
-use App\Polocies\DebitCardTransactionPolicy;
+use App\Policies\DebitCardPolicy; //! changed because it was a wrong directory
+use App\Policies\DebitCardTransactionPolicy; //! changed because it was a wrong directory
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 

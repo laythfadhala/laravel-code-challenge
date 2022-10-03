@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Polocies;
+namespace App\Policies; //! changed because it was a wrong namespace
 
 use App\Models\DebitCard;
 use App\Models\DebitCardTransaction;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class DebitCardTransactionPolicy
@@ -22,13 +23,19 @@ class DebitCardTransactionPolicy
      *
      * @return bool
      */
-    public function view(User $user, DebitCardTransaction $debitCardTransaction): bool
+    public function view(User $user, ?DebitCardTransaction $debitCardTransaction = null): bool
     {
-        return $user->is($debitCardTransaction->debitCard->user);
+        if (! isset($debitCardTransaction) && DebitCard::where(['user_id' => $user->id, 'id' => request('debitCard')])->exists()) {
+            return true;
+        } elseif (isset($debitCardTransaction)) {
+            return $user->is($debitCardTransaction->debitCard->user);
+        }
+        return false;
     }
 
     /**
-     * Create a Debit card transaction
+     *
+     *  Create a Debit card transaction
      *
      * @param User      $user
      * @param DebitCard $debitCard
