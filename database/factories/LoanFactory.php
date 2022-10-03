@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoanFactory extends Factory
@@ -22,7 +23,13 @@ class LoanFactory extends Factory
     public function definition(): array
     {
         return [
-            // TODO: Complete factory
+            'user_id' => User::factory(),
+            'amount' => $this->faker->randomDigit(),
+            'terms' => $this->faker->randomDigit(),
+            'outstanding_amount' => $this->faker->randomDigit(),
+            'currency_code' => $this->faker->currencyCode(),
+            'processed_at' => now(),
+            'status' => 'due',
         ];
     }
 }
